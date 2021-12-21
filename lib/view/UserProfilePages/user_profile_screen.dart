@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tripers/colors.dart' as colors;
+import '../../instance.dart';
 import '../../slider.dart';
 import '../settings_screen.dart';
 import 'edit_profile_screen.dart';
@@ -90,9 +91,7 @@ class UserProfile extends StatelessWidget {
                                     child: CircleAvatar(
                                       backgroundColor: Colors.white,
                                       radius: 60.sp,
-                                      backgroundImage: const AssetImage(
-                                        'assets/images/1638640662088.png',
-                                      ),
+                                      backgroundImage: NetworkImage(authenticationController.googleProfilePhotoController.toString()),
                                     ),
                                   ),
                                   GestureDetector(
@@ -127,7 +126,7 @@ class UserProfile extends StatelessWidget {
                                 height: 2.h,
                               ),
                               Text(
-                                'unys._',
+                                authenticationController.googleNameController.toString().toLowerCase().trim().replaceAll(RegExp(r"\s+"), ""),
                                 style: GoogleFonts.roboto(
                                     color: colors.mainText,
                                     fontSize: 13.sp,
@@ -148,7 +147,7 @@ class UserProfile extends StatelessWidget {
                                     fontWeight: FontWeight.w400),
                               ),
                               SizedBox(
-                                height: 1.5.h,
+                                height: 2.h,
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -193,7 +192,7 @@ class UserProfile extends StatelessWidget {
                                           width: 40.w,
                                           child: const Center(
                                               child: Text(
-                                            'Add Blog & Post',
+                                            'Blog & Post Tools',
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 13),
@@ -207,7 +206,7 @@ class UserProfile extends StatelessWidget {
                     ],
                   ),
                 ),
-              ]))
+              ],),),
             ];
           },
           body: Padding(
@@ -281,7 +280,7 @@ class UserProfile extends StatelessWidget {
         builder: (context) {
           return Container(
             padding: const EdgeInsets.all(18),
-            height: 25.h,
+            height: 50.h,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10), topRight: Radius.circular(10)),
@@ -292,17 +291,17 @@ class UserProfile extends StatelessWidget {
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                      color: Colors.grey,
+                      color: Colors.black45,
                       borderRadius: BorderRadius.circular(50)),
-                  height: 1.h,
-                  width: 15.w,
+                  height: .5.h,
+                  width: 12.w,
                 ),
                 Text(
                   'Add',
-                  style: TextStyle(
+                  style: GoogleFonts.roboto(
                       color: Colors.black,
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.bold),
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w500),
                 ),
                 const Divider(
                   thickness: 2,
@@ -314,7 +313,34 @@ class UserProfile extends StatelessWidget {
                     SizedBox(
                       width: 10.w,
                     ),
-                    const Text('Blog & Posts')
+                     Text('Blog & Posts',style: GoogleFonts.roboto(color: Colors.black,fontSize:12.sp ),)
+                  ],
+                ),
+                Divider(
+                  thickness: 2,
+                  indent: 15.w,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    const Icon(FontAwesomeIcons.penAlt),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                     Text('Boost Your Post',style: GoogleFonts.roboto(color: Colors.black,fontSize:12.sp ),)
+                  ],
+                ),
+                Divider(
+                  thickness: 2,
+                  indent: 15.w,
+                ),  Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    const Icon(FontAwesomeIcons.penAlt),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                     Text('Request for Verified Account',style: GoogleFonts.roboto(color: Colors.black,fontSize:12.sp ),)
                   ],
                 ),
                 Divider(

@@ -10,6 +10,8 @@ import 'package:tripers/view/notification_screen.dart';
 import 'package:tripers/view/UserProfilePages/user_profile_screen.dart';
 import 'package:tripers/widgets.dart';
 
+import '../instance.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -55,8 +57,8 @@ class HomePage extends StatelessWidget {
             onPressed: () {
 Get.to(const UserProfile());
             },
-            icon:const CircleAvatar(
-              backgroundImage: AssetImage('assets/images/user.jpeg',),
+            icon: CircleAvatar(
+              backgroundImage: NetworkImage(authenticationController.googleProfilePhotoController.toString()),
             )
           ),
         ],

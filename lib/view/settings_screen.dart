@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tripers/colors.dart'as colors;
 import 'package:get/get.dart';
+import 'package:tripers/instance.dart';
+import 'package:tripers/view/RegisterPages/signin_screen.dart';
 
 class Settings extends StatelessWidget {
   const Settings({Key? key}) : super(key: key);
@@ -70,6 +72,10 @@ class Settings extends StatelessWidget {
             ),
           ),
           ListTile(
+            onTap: (){
+              authenticationController.logout();
+              Get.offAll(const SignIn());
+            },
             leading: const Icon(FontAwesomeIcons.signOutAlt,color: Colors.black,),
             title: Text('Log out',
               style: GoogleFonts.roboto(

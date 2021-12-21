@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "181913457977",
+    "project_id": "derive-e10d4",
+    "storage_bucket": "derive-e10d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181913457977:android:acb0b1ac6373a8eb6ac4e8",
+        "android_client_info": {
+          "package_name": "com.example.tripers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181913457977-69u6qtll0oi5qqfidef84nprieic1987.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1g8uRuxu2bYikYchHFXFSLYZ4BLPhtbo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181913457977-69u6qtll0oi5qqfidef84nprieic1987.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

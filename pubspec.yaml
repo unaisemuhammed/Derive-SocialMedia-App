@@ -42,6 +42,12 @@ dependencies:
   dashed_circle: ^0.0.2
   carousel_slider: ^4.0.0
   smooth_page_indicator: ^1.0.0+2
+  http: ^0.13.4
+  regexpattern: ^2.0.1
+  flutter_otp_text_field: ^1.0.0
+  google_sign_in: ^5.2.1
+  firebase_auth: ^3.3.4
+  firebase_core: ^1.10.6
 
 dev_dependencies:
   flutter_test:

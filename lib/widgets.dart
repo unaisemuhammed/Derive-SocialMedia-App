@@ -33,11 +33,12 @@ Widget homePosts() {
                           totalController.update();
                         },
                         child: DashedCircle(
-                          child: const Padding(
+                          child:  Padding(
                             padding: EdgeInsets.all(2.0),
                             child: CircleAvatar(
                               backgroundImage:
-                                  AssetImage('assets/images/user.jpeg'),
+                                  // AssetImage('assets/images/user.jpeg'),
+                              NetworkImage(authenticationController.googleProfilePhotoController.toString()),
                             ),
                           ),
                           dashes: 2,
@@ -63,7 +64,7 @@ Widget homePosts() {
                       GestureDetector(
                         onTap: () => Get.to(const OthersProfile()),
                         child: Text(
-                          'unys._',x
+                         authenticationController.googleNameController.toString().toLowerCase().trim().replaceAll(RegExp(r"\s+"), ""),
                           style: GoogleFonts.roboto(
                               color: colors.mainText,
                               fontSize: 13.sp,
@@ -71,7 +72,7 @@ Widget homePosts() {
                         ),
                       ),
                       Text(
-                        'France,paris',
+                      'paris,france',
                         style: GoogleFonts.roboto(
                             color: colors.subText, fontSize: 9.sp),
                       ),
@@ -86,9 +87,22 @@ Widget homePosts() {
                       ),
                     ),
                     itemBuilder: (BuildContext context) {
-                      return [ PopupMenuItem(child: Text('Follow',   style: GoogleFonts.openSans(
-                          fontSize: 10.sp,),)), PopupMenuItem(child: Text('Message',   style: GoogleFonts.openSans(
-                          fontSize: 10.sp,),))];
+                      return [
+                        PopupMenuItem(
+                            child: Text(
+                          'Follow',
+                          style: GoogleFonts.openSans(
+                            fontSize: 10.sp,
+                          ),
+                        )),
+                        PopupMenuItem(
+                            child: Text(
+                          'Message',
+                          style: GoogleFonts.openSans(
+                            fontSize: 10.sp,
+                          ),
+                        ))
+                      ];
                     },
                   ),
                 ),
@@ -98,7 +112,7 @@ Widget homePosts() {
               height: 1.h,
             ),
             Container(
-              margin:  EdgeInsets.only(left: 3.w, right:4.w),
+              margin: EdgeInsets.only(left: 3.w, right: 4.w),
               width: 100.w,
               height: 35.h,
               decoration: BoxDecoration(
@@ -107,7 +121,10 @@ Widget homePosts() {
                     color: Colors.black54,
                     blurRadius: 1.0,
                     spreadRadius: 1.0,
-                    offset: Offset(1, 1,), // shadow direction: bottom right
+                    offset: Offset(
+                      1,
+                      1,
+                    ), // shadow direction: bottom right
                   )
                 ],
                 borderRadius: BorderRadius.circular(15),
@@ -140,7 +157,7 @@ Widget homePosts() {
               ),
             ),
             Container(
-              padding:  EdgeInsets.only(left: 4.w,bottom: 1.h,right: 4.w),
+              padding: EdgeInsets.only(left: 4.w, bottom: 1.h, right: 4.w),
               width: 100.w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +173,7 @@ Widget homePosts() {
                     height: 1.h,
                   ),
                   Text(
-                    '''Contrary to popular belief, theEiffel Tower is actually not\n the most visited...more''',
+                    '''Contrary to popular belief, theEiffel Tower is actually not\nthe most visited...more''',
                     style: GoogleFonts.roboto(
                         color: colors.subText, fontSize: 11.sp),
                   ),
@@ -255,8 +272,67 @@ Widget listTile(String title, String subtitle, String image, Widget trailing) {
         ),
       ),
     ),
-    title: Text(title,style: GoogleFonts.roboto(),),
-    subtitle: Text(subtitle,style: GoogleFonts.roboto(),),
+    title: Text(
+      title,
+      style: GoogleFonts.roboto(),
+    ),
+    subtitle: Text(
+      subtitle,
+      style: GoogleFonts.roboto(),
+    ),
     trailing: trailing,
   );
+}
+
+//Authentication AlertBox
+
+Future alertBox() {
+  return Get.defaultDialog(
+    backgroundColor: colors.backGround,
+    title: 'Invalid access',
+    titleStyle:
+        GoogleFonts.roboto(color: Colors.black, fontWeight: FontWeight.w600),
+    middleText:
+        'The username or password that you\'ve entered is incorrect.Please try again.',
+    middleTextStyle: GoogleFonts.roboto(color: Colors.grey),
+    actions: [
+      SizedBox(
+          child: TextButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: Text(
+                'Ok',
+                style: GoogleFonts.roboto(
+                    fontSize: 22,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w300),
+              ),),),
+    ],
+  );
+  // return showDialog<void>(
+  //   context: context,
+  //   barrierDismissible: true,
+  //   builder: (BuildContext context) {
+  //     return AlertDialog(
+  //       backgroundColor: colors.backGround,
+  //       title: Text(
+  //         'Incorrect password/username',
+  //         textAlign: TextAlign.center,
+  //         style: GoogleFonts.roboto(
+  //             color: Colors.black, fontWeight: FontWeight.w600),
+  //       ),
+  //       content: Text(
+  //         'The username or password that you\'ve entered is incorrect.Please try again.',
+  //         textAlign: TextAlign.center,
+  //         style: GoogleFonts.roboto(color: Colors.grey),
+  //       ),
+  //       actions: [
+  //         SizedBox(child: TextButton(onPressed: (){Get.back();}, child:  Text('Ok', style: GoogleFonts.roboto(fontSize: 22,
+  //             color: Colors.black, fontWeight: FontWeight.w300),)))
+  //       ],
+  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+  //     );
+  //   },
+  // );
 }

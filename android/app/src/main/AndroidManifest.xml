@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tripers">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="tripers"
+        android:label="Derive"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
