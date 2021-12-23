@@ -58,7 +58,7 @@ class HomePage extends StatelessWidget {
 Get.to(const UserProfile());
             },
             icon: CircleAvatar(
-              backgroundImage: NetworkImage(authenticationController.googleProfilePhotoController.toString()),
+              // backgroundImage: NetworkImage(authenticationController.googleProfilePhotoController.toString()),
             )
           ),
         ],

@@ -11,7 +11,7 @@ import 'package:tripers/view/ChatPages/chat_text.dart';
 import 'package:tripers/view/UserProfilePages/show_others_profile_screen.dart';
 import 'instance.dart';
 
-/// Home PAge Random Posts
+// Home PAge Random Posts
 Widget homePosts() {
   return GetBuilder(
       init: totalController,
@@ -37,8 +37,8 @@ Widget homePosts() {
                             padding: EdgeInsets.all(2.0),
                             child: CircleAvatar(
                               backgroundImage:
-                                  // AssetImage('assets/images/user.jpeg'),
-                              NetworkImage(authenticationController.googleProfilePhotoController.toString()),
+                                  AssetImage('assets/images/user.jpeg'),
+                              // NetworkImage(authenticationController.googleProfilePhotoController.toString()),
                             ),
                           ),
                           dashes: 2,
@@ -64,7 +64,8 @@ Widget homePosts() {
                       GestureDetector(
                         onTap: () => Get.to(const OthersProfile()),
                         child: Text(
-                         authenticationController.googleNameController.toString().toLowerCase().trim().replaceAll(RegExp(r"\s+"), ""),
+                          'hi',
+                         // authenticationController.googleNameController.toString().toLowerCase().trim().replaceAll(RegExp(r"\s+"), ""),
                           style: GoogleFonts.roboto(
                               color: colors.mainText,
                               fontSize: 13.sp,
@@ -203,7 +204,7 @@ Widget homePosts() {
       });
 }
 
-///Elevated Button
+//Elevated Button
 Widget elevatedButtons(String text, int? fontSize, Widget? widget, Color color,
     double width, double height, Color textColor) {
   return ElevatedButton(
@@ -234,7 +235,7 @@ Widget elevatedButtons(String text, int? fontSize, Widget? widget, Color color,
   );
 }
 
-///Status Page
+//Status Page
 Widget statusPage() {
   return Material(
     child: StoryView(
@@ -258,7 +259,7 @@ Widget statusPage() {
   );
 }
 
-///List of Message and Group
+//List of Message and Group
 Widget listTile(String title, String subtitle, String image, Widget trailing) {
   return ListTile(
     onTap: () => Get.to(const Chat()),
@@ -285,15 +286,14 @@ Widget listTile(String title, String subtitle, String image, Widget trailing) {
 }
 
 //Authentication AlertBox
-
-Future alertBox() {
+Future alertBox({required String content}) {
   return Get.defaultDialog(
     backgroundColor: colors.backGround,
     title: 'Invalid access',
     titleStyle:
         GoogleFonts.roboto(color: Colors.black, fontWeight: FontWeight.w600),
     middleText:
-        'The username or password that you\'ve entered is incorrect.Please try again.',
+    content,
     middleTextStyle: GoogleFonts.roboto(color: Colors.grey),
     actions: [
       SizedBox(
@@ -336,3 +336,7 @@ Future alertBox() {
   //   },
   // );
 }
+
+//Add Post AlertBox
+
+

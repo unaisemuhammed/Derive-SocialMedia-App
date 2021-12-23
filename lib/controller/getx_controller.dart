@@ -7,7 +7,7 @@ class TotalController extends GetxController {
   var activeIndex = 0;
   bool isStatusLoaded=false;
   late String text='Follow';
-   Color? blueButton;
+  Color? blueButton;
   int followNum=1;
 
 

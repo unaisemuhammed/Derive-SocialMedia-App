@@ -2,22 +2,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tripers/model/authentication/authenticationApi.dart';
+import 'package:tripers/view/RegisterPages/signup_screen.dart';
 import 'package:tripers/view/home_screen.dart';
 
 class AuthenticationController extends GetxController {
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   var firstPassword = '';
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> loginFormKey2 = GlobalKey<FormState>();
+  final GlobalKey<FormState> loginFormKey3 = GlobalKey<FormState>();
 
-  // final GlobalKey<FormState> loginFormKey2 = GlobalKey<FormState>();
 
   //Login controller
-  final TextEditingController signInUserNameController =
+   final TextEditingController signInUserNameController =
       TextEditingController();
   final TextEditingController signInPasswordController =
       TextEditingController();
@@ -92,58 +90,86 @@ class AuthenticationController extends GetxController {
       return;
     }
     loginFormKey.currentState!.save();
-    return;
   }
 
-  // void saveForm2() {
-  //   final isValid2 = loginFormKey2.currentState!.validate();
-  //   if (!isValid2) {
-  //     return;
-  //   }
-  //   loginFormKey2.currentState!.save();
-  //   Get.to(const SignUp());
-  // }
-
-//GoogleAuthentication
-  final googleSignIn = GoogleSignIn();
-  GoogleSignInAccount? _user;
-
-  GoogleSignInAccount? get user => _user;
-
- var googleNameController;
-  var googleEmailController;
-  var googleProfilePhotoController;
-
-  Future googleLogIn() async {
-    try {
-      final googleUser = await googleSignIn.signIn();
-      if (googleUser == null) return;
-      _user = googleUser;
-
-      final googleAuth = await googleUser.authentication;
-
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      await FirebaseAuth.instance.signInWithCredential(credential);
-    } catch (e) {
-      print(e.toString());
+  void saveForm2() {
+    final isValid2 = loginFormKey2.currentState!.validate();
+    if (!isValid2) {
+      return;
     }
-    signUpAuthentication();
-    Get.to(const HomePage());
-    update();
+    loginFormKey2.currentState!.save();
+    Get.to(const SignUp());
   }
 
-  //Logout
 
-  Future logout() async {
-    try {
-      await googleSignIn.disconnect();
-      FirebaseAuth.instance.signOut();
-    } catch (e) {
-      print(e.toString());
+  void saveForm3() {
+    final isValid2 = loginFormKey3.currentState!.validate();
+    if (!isValid2) {
+      return;
     }
+    loginFormKey3.currentState!.save();
+    Get.to(const SignUp());
+  }
+
+// //GoogleAuthentication
+//   final googleSignIn = GoogleSignIn();
+//   GoogleSignInAccount? _user;
+//
+//   GoogleSignInAccount? get user => _user;
+//
+//   var googleNameController;
+//   var googleEmailController;
+//   var googleProfilePhotoController;
+//
+//   Future googleLogIn() async {
+//     try {
+//       final googleUser = await googleSignIn.signIn();
+//       if (googleUser == null) return;
+//       _user = googleUser;
+//
+//       final googleAuth = await googleUser.authentication;
+//
+//       final credential = GoogleAuthProvider.credential(
+//         accessToken: googleAuth.accessToken,
+//         idToken: googleAuth.idToken,
+//       );
+//
+//       await FirebaseAuth.instance.signInWithCredential(credential);
+//     } catch (e) {
+//       print(e.toString());
+//     }
+//     signUpAuthenticationUsingGoogle();
+//     Get.to(const HomePage());
+//     update();
+//   }
+//
+//   //Google controller
+//
+//   void getGmailData() {
+//     googleNameController = user?.displayName!;
+//     googleEmailController = user?.email;
+//     googleProfilePhotoController = user?.photoUrl;
+//   }
+//
+//   //Logout
+//   Future logout() async {
+//     try {
+//       await googleSignIn.disconnect();
+//       FirebaseAuth.instance.signOut();
+//     } catch (e) {
+//       print(e.toString());
+//     }
+//   }
+
+  //Clear Controller
+  void clearController() {
+    phoneNumberController.clear();
+    fullNameController.clear();
+    usernameController.clear();
+    emailController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
+    signInUserNameController.clear();
+    signInPasswordController.clear();
   }
 }
