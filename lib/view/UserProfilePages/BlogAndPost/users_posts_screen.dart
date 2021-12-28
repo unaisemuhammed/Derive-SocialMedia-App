@@ -4,10 +4,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tripers/colors.dart' as colors;
+import 'package:tripers/instance.dart';
+import 'package:tripers/model/post/post_api_function.dart';
+import 'package:tripers/model/post/post_class_model.dart';
 
-import '../../widgets.dart';
+import '../../../widgets.dart';
 
 class UserPosts extends StatelessWidget {
   const UserPosts({Key? key}) : super(key: key);
@@ -17,14 +21,29 @@ class UserPosts extends StatelessWidget {
     return Scaffold(
       backgroundColor: colors.backGround,
       body: SafeArea(
-        child: ListView.builder(itemCount: 5,itemBuilder: (context,index){
-          return postUser();
-        }),
+        child: FutureBuilder<List<PostGet>>(
+          future: postController.futurePost,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    if(snapshot.data![index].author.toString()==postController.logInUserId){
+                      return postUser(snapshot, index);
+                    }else {
+                      return const Text('');
+                    }
+                  });
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
     );
   }
 
-  Widget postUser() {
+  Widget postUser(AsyncSnapshot<List<PostGet>> snapshot, int index) {
     return Padding(
       padding: const EdgeInsets.only(top: 30.0),
       child: Column(
@@ -47,9 +66,9 @@ class UserPosts extends StatelessWidget {
               ],
               border: Border.all(color: Colors.black),
               borderRadius: BorderRadius.circular(15),
-              image: const DecorationImage(
-                image: AssetImage('assets/images/Paris.jpg'),
-                fit: BoxFit.fill,
+              image: DecorationImage(
+                image: NetworkImage(snapshot.data![index].postImage),
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -63,12 +82,28 @@ class UserPosts extends StatelessWidget {
                   size: 25.sp,
                 ),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  FontAwesomeIcons.bookmark,
-                  size: 20.sp,
+              PopupMenuButton(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.0),
+                  ),
                 ),
+                itemBuilder: (BuildContext context) {
+                  return [
+                    PopupMenuItem(
+                        child: TextButton(onPressed: () {
+                              deleteAlbum(snapshot.data![index].id.toString());
+                        },
+                        child: Text('Delete',  style: GoogleFonts.openSans(
+                          fontSize: 10.sp,
+                        ),),)),
+                    PopupMenuItem(
+                        child: TextButton(onPressed: () {  },
+                          child: Text('Update',  style: GoogleFonts.openSans(
+                            fontSize: 10.sp,
+                          ),),)),
+                  ];
+                },
               ),
             ],
           ),
@@ -79,14 +114,14 @@ class UserPosts extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Paris Mind Set Over Everything',
+                  snapshot.data![index].title,
                   style: GoogleFonts.roboto(
                     color: colors.mainText,
                     fontSize: 15.sp,
                   ),
                 ),
                 Text(
-                  '''Contrary to popular belief, theEiffel\nTower is actually not the most visited...more''',
+                  snapshot.data![index].description,
                   style: GoogleFonts.roboto(
                       color: colors.subText, fontSize: 10.sp),
                 ),

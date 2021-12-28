@@ -1,9 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tripers/colors.dart' as colors;
+import 'package:tripers/model/post/post_class_model.dart';
 import 'package:tripers/view/ChatPages/chat_screen.dart';
 import 'package:tripers/slider.dart';
 import 'package:tripers/view/notification_screen.dart';
@@ -11,7 +13,6 @@ import 'package:tripers/view/UserProfilePages/user_profile_screen.dart';
 import 'package:tripers/widgets.dart';
 
 import '../instance.dart';
-
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -52,23 +53,33 @@ class HomePage extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-
           IconButton(
-            onPressed: () {
-Get.to(const UserProfile());
-            },
-            icon: CircleAvatar(
-              // backgroundImage: NetworkImage(authenticationController.googleProfilePhotoController.toString()),
-            )
-          ),
+              onPressed: () {
+                Get.to(const UserProfile());
+              },
+              icon: const CircleAvatar(
+                  // backgroundImage: NetworkImage(authenticationController.googleProfilePhotoController.toString()),
+                  ),),
         ],
         backgroundColor: colors.backGround,
         elevation: 0,
       ),
       body: SafeArea(
-        child: ListView.builder(itemCount: 5,itemBuilder: (context,index){
-          return homePosts();
-        }),
+        child: FutureBuilder<List<PostGet>>(
+          future: postController.futurePost,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return homePosts(snapshot, index);
+                },
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,10 +24,17 @@ Future<Object?> loginAuthentication() async {
     );
     switch (response.statusCode) {
       case 200:
+        print(response.body);
         final responseString = jsonDecode(response.body);
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('token', responseString["access"]);
-        print(prefs.getString('token'));
+        prefs.setString('token', responseString["access"].toString());
+        prefs.setString('userName', responseString["username"].toString());
+        prefs.setString('fullName', responseString["fullname"].toString());
+        prefs.setString('email', responseString["email"].toString());
+        prefs.setString('phone', responseString["phone"].toString());
+        prefs.setString('id', responseString["id"].toString());
+        print('MMMMMMMMMMMMMMMMMMMMMMMM:::${prefs.getString('id')}');
+        totalController.sharedPrefs();
         return Get.offAll(const HomePage());
       case 400:
         throw BadRequestException(response.body.toString());
@@ -44,8 +52,19 @@ Future<Object?> loginAuthentication() async {
     return alertBox(
         content:
         'User name and Password in invalid');
+  }on UnauthorisedException {
+    return alertBox(
+        content:
+        'User already exist');
+  }on FetchDataException {
+    return alertBox(
+        content:
+        'User already exist');
   }
 }
+
+
+
 
 //Registration function using manually
 Future<void> signUpAuthentication() async {
@@ -85,6 +104,14 @@ Future<void> signUpAuthentication() async {
     return alertBox(
         content:
         'User already exist');
+  }on UnauthorisedException {
+    return alertBox(
+        content:
+        'User already exist');
+  }on FetchDataException {
+    return alertBox(
+        content:
+        'User already exist');
   }
   }
 
@@ -102,7 +129,13 @@ Future<Object?> loginAuthenticationUsingGoogle() async {
       case 200:
         final responseString = jsonDecode(response.body);
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('token', responseString["access"]);
+        prefs.setString('token', responseString["access"].toString());
+        prefs.setString('userName', responseString["username"].toString());
+        prefs.setString('fullName', responseString["fullname"].toString());
+        prefs.setString('email', responseString["email"].toString());
+        prefs.setString('phone', responseString["phone"].toString());
+        prefs.setString('id', responseString["id"].toString());
+        totalController.sharedPrefs();
         return Get.offAll(const HomePage());
       case 400:
         throw BadRequestException(response.body.toString());

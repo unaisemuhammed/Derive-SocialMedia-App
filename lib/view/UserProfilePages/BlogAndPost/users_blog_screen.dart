@@ -7,7 +7,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tripers/colors.dart' as colors;
 import 'package:tripers/controller/getx_controller.dart';
 
-import '../../instance.dart';
+import '../../../instance.dart';
 
 class UsersBlog extends StatelessWidget {
   UsersBlog({Key? key}) : super(key: key);
@@ -65,6 +65,7 @@ class UsersBlog extends StatelessWidget {
               }),
         ],
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){}),
     );
   }
 

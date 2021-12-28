@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tripers/colors.dart' as colors;
-import 'package:tripers/widgets.dart';
 
 class Posts extends StatelessWidget {
   const Posts({Key? key}) : super(key: key);
@@ -11,11 +10,12 @@ class Posts extends StatelessWidget {
       backgroundColor: colors.backGround,
 
       body: SafeArea(
-        child: ListView.builder(
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return homePosts();
-            }),
+        child: Container(),
+        // child: ListView.builder(
+        //     itemCount: 5,
+        //     itemBuilder: (context, index) {
+        //       return homePosts();
+        //     }),
       ),
     );
   }

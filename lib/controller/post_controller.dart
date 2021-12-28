@@ -5,14 +5,39 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tripers/colors.dart'as colors;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tripers/colors.dart' as colors;
+import 'package:tripers/model/post/post_api_function.dart';
+import 'package:tripers/model/post/post_class_model.dart';
 
 class PostController extends GetxController {
+  late Future<List<PostGet>> futurePost;
+  String? logInUserId;
+
+  @override
+  void onInit() {
+    futurePost = fetchPost();
+    super.onInit();
+  }
+
+  final TextEditingController postTitleController = TextEditingController();
+  final TextEditingController postDescriptionController = TextEditingController();
+
+//Getting user id's
+  Future<void> sharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    logInUserId = prefs.getString('id');
+  }
+
 //Add Post From Gallery
   bool isGallery = true;
-  List<File>imageFiles=[];
+  var onePostImage;
+  var oneCarouselImage;
+  List imageFile = [];
+  List carouselImages = [];
 
-  Future<File?> pickMedia({
+//CropImage
+  Future<File?> pickMediaWithCrop({
     required bool isGallery,
     required Future<File?> Function(File file) cropImage,
   }) async {
@@ -28,20 +53,28 @@ class PostController extends GetxController {
     }
   }
 
+//WithOutCrop
+  Future<File?> pickMedia({
+    required bool isGallery,
+  }) async {
+    final source = isGallery ? ImageSource.gallery : ImageSource.camera;
+    final pickedFile = await ImagePicker().pickImage(source: source);
+    if (pickedFile == null) return null;
+    final file = File(pickedFile.path);
+    return file;
+  }
+
 //cropSquareFunction
   Future<File?> cropSquareImage(File imageFile) async {
-   return await ImageCropper.cropImage(
-      sourcePath: imageFile.path,
-      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: .7),
-      aspectRatioPresets: [CropAspectRatioPreset.square],
-   compressFormat: ImageCompressFormat.jpg,compressQuality:70,androidUiSettings:androidUiSettingLocked() );
-
-
-
+    return await ImageCropper.cropImage(
+        sourcePath: imageFile.path,
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: .7),
+        aspectRatioPresets: [CropAspectRatioPreset.original],
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 70,
+        androidUiSettings: androidUiSettingLocked());
   }
-  AndroidUiSettings androidUiSettingLocked()=>AndroidUiSettings(
-    toolbarTitle: 'Crop Image',
-    toolbarColor: colors.backGround
-  );
 
+  AndroidUiSettings androidUiSettingLocked() => const AndroidUiSettings(
+      toolbarTitle: 'Crop Image', toolbarColor: colors.backGround);
 }

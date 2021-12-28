@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tripers/instance.dart';
 import 'package:tripers/view/RegisterPages/signin_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:tripers/view/UserProfilePages/user_profile_screen.dart';
 import 'package:tripers/view/home_screen.dart';
 
 
@@ -36,7 +37,8 @@ class MyApp extends StatelessWidget {
                 indicator: UnderlineTabIndicator( // color for indicator (underline)
                     borderSide: BorderSide(color: Colors.white),),),
           ),
-          home: sharedPreferenceController.value==true?const HomePage():const SignIn(),
+           home: sharedPreferenceController.value==true?const HomePage():const SignIn(),
+         // home: const SignIn(),
         );
       }
     );

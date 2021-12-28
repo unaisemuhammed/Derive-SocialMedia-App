@@ -7,12 +7,205 @@ import 'package:sizer/sizer.dart';
 import 'package:story_view/utils.dart';
 import 'package:story_view/widgets/story_view.dart';
 import 'package:tripers/colors.dart' as colors;
+import 'package:tripers/model/post/post_class_model.dart';
 import 'package:tripers/view/ChatPages/chat_text.dart';
 import 'package:tripers/view/UserProfilePages/show_others_profile_screen.dart';
 import 'instance.dart';
 
 // Home PAge Random Posts
-Widget homePosts() {
+// Widget homePosts() {
+//   return GetBuilder(
+//       init: totalController,
+//       builder: (controller) {
+//         return Column(
+//           children: [
+//             Row(
+//               children: [
+//                 Container(
+//                   padding: EdgeInsets.only(left: 4.w),
+//                   child: Row(
+//                     children: [
+//                       GestureDetector(
+//                         onTap: () {
+//                           totalController.isStatusLoaded == false
+//                               ? Get.to(statusPage())
+//                               : Get.to(const OthersProfile());
+//                           totalController.isStatusLoaded = true;
+//                           totalController.update();
+//                         },
+//                         child: DashedCircle(
+//                           child:  Padding(
+//                             padding: EdgeInsets.all(2.0),
+//                             child: CircleAvatar(
+//                               backgroundImage:
+//                                   AssetImage('assets/images/user.jpeg'),
+//                               // NetworkImage(authenticationController.googleProfilePhotoController.toString()),
+//                             ),
+//                           ),
+//                           dashes: 2,
+//                           color: totalController.isStatusLoaded == true
+//                               ? colors.backGroundGrey
+//                               : colors.storyColor,
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         width: 2.w,
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//                 SizedBox(
+//                   width: .1.h,
+//                 ),
+//                 Expanded(
+//                   flex: 5,
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       GestureDetector(
+//                         onTap: () => Get.to(const OthersProfile()),
+//                         child: Text(
+//                           'hi',
+//                          // authenticationController.googleNameController.toString().toLowerCase().trim().replaceAll(RegExp(r"\s+"), ""),
+//                           style: GoogleFonts.roboto(
+//                               color: colors.mainText,
+//                               fontSize: 13.sp,
+//                               fontWeight: FontWeight.w400),
+//                         ),
+//                       ),
+//                       Text(
+//                       'paris,france',
+//                         style: GoogleFonts.roboto(
+//                             color: colors.subText, fontSize: 9.sp),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//                 Expanded(
+//                   child: PopupMenuButton(
+//                     shape: const RoundedRectangleBorder(
+//                       borderRadius: BorderRadius.all(
+//                         Radius.circular(10.0),
+//                       ),
+//                     ),
+//                     itemBuilder: (BuildContext context) {
+//                       return [
+//                         PopupMenuItem(
+//                             child: Text(
+//                           'Follow',
+//                           style: GoogleFonts.openSans(
+//                             fontSize: 10.sp,
+//                           ),
+//                         )),
+//                         PopupMenuItem(
+//                             child: Text(
+//                           'Message',
+//                           style: GoogleFonts.openSans(
+//                             fontSize: 10.sp,
+//                           ),
+//                         ))
+//                       ];
+//                     },
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             SizedBox(
+//               height: 1.h,
+//             ),
+//             Container(
+//               margin: EdgeInsets.only(left: 3.w, right: 4.w),
+//               width: 100.w,
+//               height: 35.h,
+//               decoration: BoxDecoration(
+//                 boxShadow: const [
+//                   BoxShadow(
+//                     color: Colors.black54,
+//                     blurRadius: 1.0,
+//                     spreadRadius: 1.0,
+//                     offset: Offset(
+//                       1,
+//                       1,
+//                     ), // shadow direction: bottom right
+//                   )
+//                 ],
+//                 borderRadius: BorderRadius.circular(15),
+//                 image: const DecorationImage(
+//                   image: AssetImage('assets/images/Paris.jpg'),
+//                   fit: BoxFit.fill,
+//                 ),
+//               ),
+//             ),
+//             Padding(
+//               padding: const EdgeInsets.only(right: 15, left: 15, top: 3),
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 children: [
+//                   IconButton(
+//                     onPressed: () {},
+//                     icon: Icon(
+//                       Icons.favorite_border,
+//                       size: 22.sp,
+//                     ),
+//                   ),
+//                   IconButton(
+//                     onPressed: () {},
+//                     icon: Icon(
+//                       FontAwesomeIcons.bookmark,
+//                       size: 18.sp,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             Container(
+//               padding: EdgeInsets.only(left: 4.w, bottom: 1.h, right: 4.w),
+//               width: 100.w,
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   Text(
+//                     'Paris Mind Set Over Everything',
+//                     style: GoogleFonts.roboto(
+//                       color: colors.mainText,
+//                       fontSize: 15.sp,
+//                     ),
+//                   ),
+//                   SizedBox(
+//                     height: 1.h,
+//                   ),
+//                   Text(
+//                     '''Contrary to popular belief, theEiffel Tower is actually not\nthe most visited...more''',
+//                     style: GoogleFonts.roboto(
+//                         color: colors.subText, fontSize: 11.sp),
+//                   ),
+//                   SizedBox(
+//                     height: 2.h,
+//                   ),
+//                   Center(
+//                     child: Container(
+//                       padding: EdgeInsets.only(top: 2.h, left: 2.h),
+//                       child: Text(
+//                         'Add a Comment..',
+//                         style: GoogleFonts.openSans(
+//                             color: colors.subText, fontSize: 9.sp),
+//                       ),
+//                       width: 100.w,
+//                       height: 6.h,
+//                       decoration: BoxDecoration(
+//                           color: Colors.white,
+//                           borderRadius: BorderRadius.circular(20)),
+//                     ),
+//                   )
+//                 ],
+//               ),
+//             )
+//           ],
+//         );
+//       });
+// }
+
+Widget homePosts(AsyncSnapshot<List<PostGet>> snapshot, int index) {
   return GetBuilder(
       init: totalController,
       builder: (controller) {
@@ -33,7 +226,7 @@ Widget homePosts() {
                           totalController.update();
                         },
                         child: DashedCircle(
-                          child:  Padding(
+                          child: const Padding(
                             padding: EdgeInsets.all(2.0),
                             child: CircleAvatar(
                               backgroundImage:
@@ -64,8 +257,9 @@ Widget homePosts() {
                       GestureDetector(
                         onTap: () => Get.to(const OthersProfile()),
                         child: Text(
-                          'hi',
-                         // authenticationController.googleNameController.toString().toLowerCase().trim().replaceAll(RegExp(r"\s+"), ""),
+                          'unys._',
+                         //totalController.userName.toString().toLowerCase().trim().replaceAll(RegExp(r"\s+"), ""),
+                          // authenticationController.googleNameController.toString().toLowerCase().trim().replaceAll(RegExp(r"\s+"), ""),
                           style: GoogleFonts.roboto(
                               color: colors.mainText,
                               fontSize: 13.sp,
@@ -73,7 +267,7 @@ Widget homePosts() {
                         ),
                       ),
                       Text(
-                      'paris,france',
+                        'paris,france',
                         style: GoogleFonts.roboto(
                             color: colors.subText, fontSize: 9.sp),
                       ),
@@ -113,6 +307,7 @@ Widget homePosts() {
               height: 1.h,
             ),
             Container(
+
               margin: EdgeInsets.only(left: 3.w, right: 4.w),
               width: 100.w,
               height: 35.h,
@@ -129,9 +324,9 @@ Widget homePosts() {
                   )
                 ],
                 borderRadius: BorderRadius.circular(15),
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/Paris.jpg'),
-                  fit: BoxFit.fill,
+                image:  DecorationImage(
+                  image: NetworkImage(snapshot.data![index].postImage),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -164,7 +359,7 @@ Widget homePosts() {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Paris Mind Set Over Everything',
+              snapshot.data![index].title,
                     style: GoogleFonts.roboto(
                       color: colors.mainText,
                       fontSize: 15.sp,
@@ -174,9 +369,9 @@ Widget homePosts() {
                     height: 1.h,
                   ),
                   Text(
-                    '''Contrary to popular belief, theEiffel Tower is actually not\nthe most visited...more''',
+                      snapshot.data![index].description,
                     style: GoogleFonts.roboto(
-                        color: colors.subText, fontSize: 11.sp),
+                        color: colors.subText, fontSize: 12.sp),
                   ),
                   SizedBox(
                     height: 2.h,
@@ -292,22 +487,21 @@ Future alertBox({required String content}) {
     title: 'Invalid access',
     titleStyle:
         GoogleFonts.roboto(color: Colors.black, fontWeight: FontWeight.w600),
-    middleText:
-    content,
+    middleText: content,
     middleTextStyle: GoogleFonts.roboto(color: Colors.grey),
     actions: [
       SizedBox(
-          child: TextButton(
-              onPressed: () {
-                Get.back();
-              },
-              child: Text(
-                'Ok',
-                style: GoogleFonts.roboto(
-                    fontSize: 22,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w300),
-              ),),),
+        child: TextButton(
+          onPressed: () {
+            Get.back();
+          },
+          child: Text(
+            'Ok',
+            style: GoogleFonts.roboto(
+                fontSize: 22, color: Colors.black, fontWeight: FontWeight.w300),
+          ),
+        ),
+      ),
     ],
   );
   // return showDialog<void>(
@@ -338,5 +532,3 @@ Future alertBox({required String content}) {
 }
 
 //Add Post AlertBox
-
-
