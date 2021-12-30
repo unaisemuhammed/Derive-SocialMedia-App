@@ -51,15 +51,15 @@ Future<Object?> loginAuthentication() async {
   }on BadRequestException {
     return alertBox(
         content:
-        'User name and Password in invalid');
+        'Invalid User name or Password');
   }on UnauthorisedException {
     return alertBox(
         content:
-        'User already exist');
+        'Invalid User name or Password');
   }on FetchDataException {
     return alertBox(
         content:
-        'User already exist');
+        'Invalid User name or Password');
   }
 }
 

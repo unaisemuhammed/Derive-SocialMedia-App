@@ -300,7 +300,9 @@ class NewBlogAndPost extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          actions: [TextButton(onPressed: ()async{
+          actions: [TextButton(onPressed: (){
+            postController.onePostImage='';
+            postController.imageFile=[];
             Get.offAll(const HomePage());
           }, child: const Text('Share'),),],
           title: Row(

@@ -7,6 +7,7 @@ import 'package:sizer/sizer.dart';
 import 'package:story_view/utils.dart';
 import 'package:story_view/widgets/story_view.dart';
 import 'package:tripers/colors.dart' as colors;
+import 'package:tripers/controller/post_controller.dart';
 import 'package:tripers/model/post/post_class_model.dart';
 import 'package:tripers/view/ChatPages/chat_text.dart';
 import 'package:tripers/view/UserProfilePages/show_others_profile_screen.dart';
@@ -335,13 +336,22 @@ Widget homePosts(AsyncSnapshot<List<PostGet>> snapshot, int index) {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.favorite_border,
-                      size: 22.sp,
-                    ),
-                  ),
+        Row(children: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.favorite_border,
+              size: 22.sp,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              FontAwesomeIcons.comment,
+              size: 20.sp,
+            ),
+          ),
+        ],),
                   IconButton(
                     onPressed: () {},
                     icon: Icon(
@@ -531,4 +541,39 @@ Future alertBox({required String content}) {
   // );
 }
 
-//Add Post AlertBox
+//Delete Box
+Future deleteBox(  String content, AsyncSnapshot<List<PostGet>> snapshot, int index) {
+  return Get.defaultDialog(
+    backgroundColor: colors.backGround,
+    title: 'Alert',
+    titleStyle:
+    GoogleFonts.roboto(color: Colors.black, fontWeight: FontWeight.w600),
+    middleText: content,
+    middleTextStyle: GoogleFonts.roboto(color: Colors.grey),
+    actions: [
+      SizedBox(
+        child: TextButton(
+          onPressed: () {
+          },
+          child: Text(
+            'No',
+            style: GoogleFonts.roboto(
+                fontSize: 22, color: Colors.black, fontWeight: FontWeight.w300),
+          ),
+        ),
+      ),
+      SizedBox(
+        child: TextButton(
+          onPressed: () {
+            postApi.deletePost(snapshot.data![index].id.toString());
+
+          },
+          child: Text(
+            'Yes',
+            style: GoogleFonts.roboto(
+                fontSize: 22, color: Colors.black, fontWeight: FontWeight.w300),
+          ),
+        ),
+      ),
+    ],
+  );}

@@ -340,8 +340,7 @@ class UserProfile extends StatelessWidget {
                     // if (file == null) return;
                     // postController.oneCarouselImage = file;
                     // postController.carouselImages.add(file);
-                    //Get.to(const NewBlogAndPost());
-                    Get.to(NewPost());
+                    Get.to(const NewBlogAndPost());
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,

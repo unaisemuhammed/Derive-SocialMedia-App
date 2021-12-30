@@ -1,43 +1,64 @@
 import 'package:dashed_circle/dashed_circle.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tripers/colors.dart' as colors;
 import 'package:tripers/instance.dart';
-import 'package:tripers/model/post/post_api_function.dart';
 import 'package:tripers/model/post/post_class_model.dart';
+import 'package:tripers/view/UserProfilePages/NewBlogAndPost/user_post_add_screen.dart';
 
 import '../../../widgets.dart';
 
-class UserPosts extends StatelessWidget {
+class UserPosts extends StatefulWidget {
   const UserPosts({Key? key}) : super(key: key);
+
+  @override
+  State<UserPosts> createState() => _UserPostsState();
+}
+
+class _UserPostsState extends State<UserPosts> {
+  late Future<List<PostGet>> futurePost;
+
+  @override
+  void initState() {
+    loadList();
+    super.initState();
+  }
+
+  Future loadList() async {
+    setState(() {
+      futurePost = postApi.fetchPost();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colors.backGround,
       body: SafeArea(
-        child: FutureBuilder<List<PostGet>>(
-          future: postController.futurePost,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    if(snapshot.data![index].author.toString()==postController.logInUserId){
-                      return postUser(snapshot, index);
-                    }else {
-                      return const Text('');
-                    }
-                  });
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
+        child: RefreshIndicator(
+          onRefresh: loadList,
+          child: FutureBuilder<List<PostGet>>(
+            future: futurePost,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      if (snapshot.data![index].author.toString() ==
+                          postController.logInUserId) {
+                        return postUser(snapshot, index);
+                      } else {
+                        return const Text('');
+                      }
+                    });
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         ),
       ),
     );
@@ -91,17 +112,42 @@ class UserPosts extends StatelessWidget {
                 itemBuilder: (BuildContext context) {
                   return [
                     PopupMenuItem(
-                        child: TextButton(onPressed: () {
-                              deleteAlbum(snapshot.data![index].id.toString());
-                        },
-                        child: Text('Delete',  style: GoogleFonts.openSans(
-                          fontSize: 10.sp,
-                        ),),)),
+                        onTap: () => Get.back(),
+                        child: TextButton(
+                          onPressed: () async {
+                            await deleteBox(
+                                'Are you sure to delete.', snapshot, index);
+                            Get.back();
+                          },
+                          child: Text(
+                            'Delete',
+                            style: GoogleFonts.openSans(
+                              fontSize: 10.sp,
+                            ),
+                          ),
+                        )),
                     PopupMenuItem(
-                        child: TextButton(onPressed: () {  },
-                          child: Text('Update',  style: GoogleFonts.openSans(
-                            fontSize: 10.sp,
-                          ),),)),
+                        child: TextButton(
+                      onPressed: () {
+                        postController.postTitleController.text =
+                            snapshot.data![index].title;
+                        postController.postDescriptionController.text =
+                            snapshot.data![index].description;
+                        postController.onePostImage =
+                            snapshot.data![index].postImage;
+                        postController.currentId = snapshot.data![index].id;
+                        Get.to(AddPoster(
+                          check: 1,
+                        ));
+                        setState(() {});
+                      },
+                      child: Text(
+                        'Update',
+                        style: GoogleFonts.openSans(
+                          fontSize: 10.sp,
+                        ),
+                      ),
+                    )),
                   ];
                 },
               ),

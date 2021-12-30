@@ -10,15 +10,11 @@ import 'package:tripers/colors.dart' as colors;
 import 'package:tripers/model/post/post_api_function.dart';
 import 'package:tripers/model/post/post_class_model.dart';
 
+import '../instance.dart';
+
 class PostController extends GetxController {
-  late Future<List<PostGet>> futurePost;
   String? logInUserId;
 
-  @override
-  void onInit() {
-    futurePost = fetchPost();
-    super.onInit();
-  }
 
   final TextEditingController postTitleController = TextEditingController();
   final TextEditingController postDescriptionController = TextEditingController();
@@ -30,6 +26,7 @@ class PostController extends GetxController {
   }
 
 //Add Post From Gallery
+  int? currentId;
   bool isGallery = true;
   var onePostImage;
   var oneCarouselImage;
